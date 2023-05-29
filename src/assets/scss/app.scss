@@ -1,0 +1,232 @@
+@use "./global/app" as *;
+
+// foundation
+@use "./foundation/root";
+@use "./foundation/reset";
+
+// utility
+@use "./other/utility";
+
+// --------------------------
+
+html,
+body {
+  overflow: hidden;
+}
+
+#world {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100vw;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+}
+
+// タイトル
+.c-title {
+  pointer-events: none;
+  user-select: none;
+  position: fixed;
+  top: liquid(16);
+  right: liquid(24);
+  z-index: 10;
+  text-align: right;
+  mix-blend-mode: overlay;
+  @include sp_w() {
+    top: liquid(12);
+    right: liquid(12);
+  }
+  span {
+    font-size: liquid(64);
+    font-weight: bold;
+    letter-spacing: liquid(-4);
+    color: var(--white);
+    line-height: 100%;
+    @include sp_w() {
+      font-size: liquid(28);
+      letter-spacing: liquid(-2);
+    }
+    &:nth-of-type(1) {
+    }
+    &:nth-of-type(2) {
+      font-size: liquid(44);
+      @include sp_w() {
+        font-size: liquid(24);
+      }
+    }
+  }
+}
+
+// ローディング
+.l-loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 100vw;
+  height: 100vh;
+  height: 100svh;
+  height: calc(var(--vh, 1vh) * 100);
+  background: var(--white);
+  opacity: 1;
+  body[data-status="enter"] & {
+    pointer-events: none;
+    user-select: none;
+    transition: 1s ease opacity;
+    opacity: 0;
+  }
+}
+.l-loading__text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  margin: auto;
+  width: max-content;
+  height: max-content;
+  color: var(--black);
+  font-size: liquid(24);
+  font-weight: bold;
+  @include sp_w() {
+    font-size: liquid(20);
+  }
+}
+
+// コントローラー
+.l-controller {
+  position: fixed;
+  bottom: liquid(20);
+  left: liquid(20);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  width: max-content;
+  height: max-content;
+  @include sp_w() {
+    bottom: liquid(12);
+    left: liquid(12);
+    margin: auto;
+  }
+}
+.l-controller__group {
+  display: flex;
+  align-items: center;
+  gap: liquid(4);
+  margin-right: liquid(16);
+}
+
+// UI
+button {
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}
+.c-github,
+.c-btnElectricityPower,
+.c-btnWingPower {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: liquid(24);
+  height: liquid(24);
+  svg {
+    pointer-events: none;
+    user-select: none;
+    display: block;
+    width: 100%;
+    height: 100%;
+    fill: var(--white);
+  }
+
+  opacity: 1;
+  transition: 0.3s ease opacity;
+  @include hover() {
+    opacity: 0.5;
+  }
+}
+.c-btnWingPower {
+  &:nth-of-type(1) {
+    margin-right: liquid(4);
+  }
+  &:nth-last-of-type(1) {
+    margin-left: liquid(4);
+  }
+}
+.c-github {
+  width: liquid(22);
+  height: liquid(22);
+}
+
+// メーター
+.c-meter {
+  pointer-events: none;
+  user-select: none;
+  width: liquid(6);
+  height: liquid(16);
+  border: liquid(1.5) solid var(--white);
+  box-sizing: border-box;
+  background: initial;
+}
+.c-meter-1 {
+  body[data-power="1"] &,
+  body[data-power="2"] &,
+  body[data-power="3"] & {
+    background: var(--white);
+  }
+}
+.c-meter-2 {
+  body[data-power="2"] &,
+  body[data-power="3"] & {
+    background: var(--white);
+  }
+}
+.c-meter-3 {
+  body[data-power="3"] & {
+    background: var(--white);
+  }
+}
+
+// コピーライト
+.c-copyright {
+  position: fixed;
+  bottom: liquid(24);
+  right: liquid(24);
+  z-index: 2000;
+  display: block;
+  font-size: liquid(12);
+  font-weight: bold;
+  letter-spacing: initial;
+  font-family: var(--ja);
+  line-height: 100%;
+  width: max-content;
+  color: var(--white);
+  @include sp_w() {
+    bottom: liquid(12);
+    right: liquid(12);
+  }
+  &::before {
+    pointer-events: none;
+    user-select: none;
+    content: "";
+    position: absolute;
+    bottom: liquid(-4);
+    left: 0;
+    z-index: 0;
+    transform: translate3d(0, 0, 0px);
+    height: 2px;
+    width: 100%;
+    background: var(--white);
+    transform: scale(0, 1);
+    transform-origin: left;
+    transition: 0.4s $easeinout transform;
+  }
+  @include hover() {
+    &::before {
+      transform: scale(1, 1);
+    }
+  }
+}
